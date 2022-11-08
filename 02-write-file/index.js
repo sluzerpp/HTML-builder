@@ -5,7 +5,7 @@ const {stdin, stdout} = proc
 fs.writeFile(path.join(__dirname,"text.txt"), "", (err) => console.log(err))
 
 stdin.on("data", data => {
-    data = data.toString().split("").splice(0,data.length-2).join("")
+    data = data.toString().trim()
     if (data == "exit") {
         proc.exit(0)
     }
@@ -14,6 +14,10 @@ stdin.on("data", data => {
 
 proc.on("exit", (code) => {
     console.log("Программа завершена, прощайте!");
+  });
+
+  process.on('SIGINT', () => {
+    process.exit()
   });
 
 // При вводе exit оно нормально отлавливает событие выхода,
